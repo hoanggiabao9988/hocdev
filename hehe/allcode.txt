@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiendev Code Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="main-header fade-in">
+    <div class="container">
+        <h1 class="logo"><a href="#">Tiendev Code Hub</a></h1>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Trang Chủ</a></li>
+                <li><a href="lessons.html">Bài Học</a></li>
+                <li><a href="#upload-article">Đăng Bài Mới</a></li>
+                <li><a href="#contact">Liên Hệ</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="search-bar fade-in">
+    <input id="search-input" type="text" placeholder="Tìm bài học...">
+</div>
+
+<section id="hero-section" class="hero fade-in">
+    <div class="container">
+        <h2>Khám Phá Thế Giới Code Cùng Baodev!</h2>
+        <p>Nơi chia sẻ kiến thức, học hỏi và phát triển kỹ năng lập trình.</p>
+
+        <!-- Nút chuyển hướng -->
+        <a href="lessons.html" class="btn primary-btn">Bắt Đầu Học Ngay</a>
+    </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Bài Học - Baodev Code Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="main-header fade-in">
+        <div class="container">
+            <h1 class="logo"><a href="index.html">Baodev Code Hub</a></h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="lessons.html">Bài Học</a></li>
+                    <li><a href="index.html#upload-article">Đăng Bài Mới</a></li>
+                    <li><a href="#contact">Liên Hệ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SEARCH BAR -->
+    <div class="search-bar fade-in">
+        <input id="lesson-search" type="text" placeholder="Tìm bài học...">
+    </div>
+
+    <!-- LIST BÀI HỌC -->
+    <section class="section lessons-overview fade-in">
+        <div class="container">
+            <h3>Danh Sách Bài Học</h3>
+
+            <div class="lesson-grid" id="lesson-list">
+
+                <div class="lesson-card">
+                    <h4>Giới Thiệu HTML/CSS Cơ Bản</h4>
+                    <p>Học cách xây dựng một website đầu tiên của bạn.</p>
+                </div>
+
+                <div class="lesson-card">
+                    <h4>JavaScript Cho Người Mới Bắt Đầu</h4>
+                    <p>Học ngôn ngữ lập trình phổ biến nhất thế giới.</p>
+                </div>
+
+                <div class="lesson-card">
+                    <h4>Python: Từ Cơ Bản Đến Nâng Cao</h4>
+                    <p>Bắt đầu con đường lập trình Python chuyên nghiệp.</p>
+                </div>
+
+                <div class="lesson-card">
+                    <h4>Lập Trình Backend Với Node.js</h4>
+                    <p>Xây dựng hệ thống server mạnh mẽ.</p>
+                </div>
+
+                <div class="lesson-card">
+                    <h4>ReactJS Cho Người Mới</h4>
+                    <p>Tạo giao diện web nhanh và hiện đại.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Đọc bài - Tiendev</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- marked.js để convert markdown -> html -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <h1 class="logo"><a href="index.html">Tiendev Code Hub</a></h1>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Trang Chủ</a></li>
+          <li><a href="lessons.html">Bài Học</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding:30px 0;">
+    <article class="form-card">
+      <h2 id="post-title">Đang tải...</h2>
+      <div id="post-content"></div>
+    </article>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+<?php
+header('Content-Type: application/json');
+
+// Nhận JSON
+$input = json_decode(file_get_contents('php://input'), true);
+
+// Validate cơ bản
+$title   = htmlspecialchars(trim($input['title'] ?? ''));
+$content = htmlspecialchars(trim($input['content'] ?? ''));
+$slug    = preg_replace('/[^a-z0-9\-]/', '', strtolower($input['slug'] ?? ''));
+$repoOwner = $input['repoOwner'] ?? '';
+$repoName  = $input['repoName'] ?? '';
+
+// LẤY TOKEN TỪ ENV (AN TOÀN)
+$token = getenv("GITHUB_TOKEN");
+if (!$token) {
+    echo json_encode(["error" => "Missing GitHub token"]);
+    exit;
+}
+
+// Tạo path file
+$path = "posts/$slug.md";
+
+// Markdown
+$md = "# $title\n\n$content";
+$base64 = base64_encode($md);
+
+// JSON gửi GitHub
+$data = json_encode([
+    "message" => "Add post $slug",
+    "content" => $base64
+]);
+
+// API URL
+$url = "https://api.github.com/repos/$repoOwner/$repoName/contents/$path";
+
+// cURL
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    "Authorization: Bearer $token",
+    "User-Agent: PHP-cURL",
+    "Accept: application/vnd.github+json",
+    "Content-Type: application/json"
+]);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$result = curl_exec($ch);
+curl_close($ch);
+
+// Output
+echo $result;
+
+
+
+
+
+
+
+
+<?php
+header('Content-Type: application/json');
+
+$input = json_decode(file_get_contents("php://input"), true);
+
+$title = trim($input["title"] ?? "");
+$content = trim($input["content"] ?? "");
+$slug = trim($input["slug"] ?? "");
+
+if ($slug === "") {
+    die(json_encode(["error" => "Missing slug"]));
+}
+
+$repoOwner = "hoanggiabao9988";
+$repoName  = "hocdev";
+$token     = getenv("GITHUB_TOKEN"); // <-- KHÔNG ĐƯỢC HARD-CODE
+
+$path = "posts/$slug.md";
+
+$markdown = "# $title\n\n$content";
+$base64 = base64_encode($markdown);
+
+// 1. Lấy SHA của file cũ (để update)
+$ch = curl_init("https://api.github.com/repos/$repoOwner/$repoName/contents/$path");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+  "Authorization: Bearer $token",
+  "User-Agent: PHP-cURL"
+]);
+$info = curl_exec($ch);
+curl_close($ch);
+
+$infoJson = json_decode($info, true);
+$sha = $infoJson["sha"] ?? null;
+
+// 2. Gửi PUT tạo file
+$data = json_encode([
+  "message" => "Update post $slug",
+  "content" => $base64,
+  "sha"     => $sha
+]);
+
+$ch2 = curl_init("https://api.github.com/repos/$repoOwner/$repoName/contents/$path");
+curl_setopt($ch2, CURLOPT_CUSTOMREQUEST, "PUT");
+curl_setopt($ch2, CURLOPT_POSTFIELDS, $data);
+curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch2, CURLOPT_HTTPHEADER, [
+  "Authorization: Bearer $token",
+  "User-Agent: PHP-cURL",
+  "Content-Type: application/json"
+]);
+
+$result = curl_exec($ch2);
+curl_close($ch2);
+
+echo $result;
+
+
+
+
+
+
+
+
+console.log("Hello from Tiendev AI! (MD flow)");
+
+// helper: delay (debug)
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+// animation
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".fade-in").forEach((el, i) => {
+    setTimeout(() => el.classList.add("show"), i * 100);
+  });
+});
+
+// === CẤU HÌNH (thay đổi cho repo của bạn) ===
+const GITHUB_OWNER = 'hoanggiabao9988';
+const GITHUB_REPO = 'hocdev';
+// Worker upload URL (đổi thành URL bạn deploy)
+const WORKER_UPLOAD_URL = 'https://your-worker-subdomain.workers.dev/upload';
+
+// === FORM GỬI BÀI (trong index.html hay trang có form) ===
+const form = document.getElementById('article-upload-form');
+const statusBox = document.getElementById('upload-status');
+
+if (form) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const title = document.getElementById('article-title').value.trim();
+    const content = document.getElementById('article-content').value.trim();
+    if (!title || !content) {
+      statusBox.innerText = 'Vui lòng nhập tiêu đề và nội dung';
+      statusBox.style.color = 'orange';
+      return;
+    }
+
+    statusBox.innerText = '⏳ Đang gửi bài...';
+    statusBox.style.color = '#4db8ff';
+
+    // tạo slug đơn giản từ title
+    const slug = title.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').substring(0, 120);
+
+    try {
+      const res = await fetch(WORKER_UPLOAD_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title,
+          content,
+          slug,
+          repoOwner: GITHUB_OWNER,
+          repoName: GITHUB_REPO
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        statusBox.innerText = '✅ Gửi bài thành công! Redirect...';
+        statusBox.style.color = 'lime';
+        form.reset();
+        // chờ 1 giây rồi chuyển sang trang list
+        await sleep(900);
+        window.location.href = `lessons.html?added=${encodeURIComponent(slug)}`;
+      } else {
+        console.error('Upload failed', data);
+        statusBox.innerText = '❌ Gửi thất bại. Kiểm tra console.';
+        statusBox.style.color = 'red';
+      }
+    } catch (err) {
+      console.error(err);
+      statusBox.innerText = '❌ Lỗi kết nối.';
+      statusBox.style.color = 'red';
+    }
+  });
+}
+
+// === LOAD POSTS: từ GitHub (folder /posts) ===
+// Lấy danh sách file trong folder posts
+async function loadPostList() {
+  const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/posts`;
+  const res = await fetch(apiUrl);
+  if (!res.ok) return [];
+  const files = await res.json(); // array of file info
+  // filter .md only and sort by name/date heuristic
+  const mdFiles = files.filter(f => f.name.endsWith('.md'));
+  // load file contents (download_url)
+  const posts = [];
+  for (const f of mdFiles) {
+    try {
+      const textRes = await fetch(f.download_url);
+      const raw = await textRes.text();
+      // first line may be "# Title"
+      const firstLine = raw.split('\n')[0].replace(/^#\s*/, '').trim();
+      posts.push({
+        name: f.name,
+        slug: f.name.replace(/\.md$/i, ''),
+        title: firstLine || f.name.replace(/\.md$/i, ''),
+        content: raw,
+        url: f.download_url
+      });
+    } catch (e) {
+      console.warn('Failed to load', f.name, e);
+    }
+  }
+  // optional: newest first by name/date
+  return posts.reverse();
+}
+
+// RENDER list into element with id=lesson-list (if exists)
+async function renderPostList() {
+  const listEl = document.getElementById('lesson-list');
+  if (!listEl) return;
+  listEl.innerHTML = '⏳ Đang tải danh sách...';
+  const posts = await loadPostList();
+  if (!posts.length) {
+    listEl.innerHTML = '<p>Chưa có bài nào.</p>';
+    return;
+  }
+  listEl.innerHTML = '';
+  posts.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'lesson-card';
+    card.innerHTML = `
+      <h4><a class="post-link" href="post.html?post=${encodeURIComponent(p.slug)}">${escapeHtml(p.title)}</a></h4>
+      <p>${escapeHtml(snippetFromMarkdown(p.content, 140))}</p>
+    `;
+    listEl.appendChild(card);
+  });
+}
+
+// helper: lấy đoạn preview từ markdown
+function snippetFromMarkdown(md, len = 140) {
+  // remove markdown headers and code blocks roughly
+  let txt = md.replace(/```[\s\S]*?```/g, ' ').replace(/[#>*`]/g, '');
+  txt = txt.replace(/\n+/g, ' ').trim();
+  if (txt.length > len) txt = txt.slice(0, len) + '...';
+  return txt;
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// === SEARCH trên page list hoặc index (nếu có lesson-card) ===
+function setupSearch(inputId = 'lesson-search') {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  input.addEventListener('keyup', () => {
+    const q = input.value.trim().toLowerCase();
+    document.querySelectorAll('.lesson-card').forEach(card => {
+      const text = card.textContent.toLowerCase();
+      card.style.display = text.includes(q) ? '' : 'none';
+    });
+  });
+}
+
+// === VIEW single post (post.html) ===
+async function renderSinglePost() {
+  const elTitle = document.getElementById('post-title');
+  const elContent = document.getElementById('post-content');
+  if (!elTitle || !elContent) return;
+
+  const params = new URLSearchParams(location.search);
+  const slug = params.get('post');
+  if (!slug) {
+    elTitle.innerText = 'Không có bài được chọn';
+    return;
+  }
+  elTitle.innerText = '⏳ Đang tải...';
+
+  try {
+    const rawUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/posts/${slug}.md`;
+    const res = await fetch(rawUrl);
+    if (!res.ok) {
+      elTitle.innerText = 'Không tìm thấy bài';
+      elContent.innerHTML = '';
+      return;
+    }
+    const md = await res.text();
+    // sử dụng marked.js để convert
+    if (window.marked) {
+      elContent.innerHTML = marked.parse(md);
+    } else {
+      // fallback: đơn giản thay newline -> <p>
+      elContent.innerHTML = '<pre>' + escapeHtml(md) + '</pre>';
+    }
+    // lấy title từ header
+    const firstLine = md.split('\n')[0].replace(/^#\s*/, '').trim();
+    elTitle.innerText = firstLine || slug;
+  } catch (e) {
+    console.error(e);
+    elTitle.innerText = 'Lỗi tải bài';
+  }
+}
+
+// chạy init trên các trang
+document.addEventListener('DOMContentLoaded', () => {
+  renderPostList();
+  setupSearch('lesson-search');
+  setupSearch('search-input'); // nếu bạn vẫn để ô search trên index
+  renderSinglePost();
+});
+
+
+
+
+
+
+
+/* ===================== */
+/* RESET + BODY */
+/* ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    background: #111;
+    color: white;
+    line-height: 1.6;
+}
+
+/* ===================== */
+/* HEADER */
+/* ===================== */
+.main-header {
+    background: #000;
+    padding: 15px 0;
+    border-bottom: 1px solid #222;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.logo a {
+    color: #4db8ff;
+    font-size: 28px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #ddd;
+    transition: 0.3s;
+}
+
+.main-nav a:hover {
+    color: #4db8ff;
+}
+
+/* ===================== */
+/* SEARCH BAR */
+/* ===================== */
+.search-bar {
+    width: 100%;
+    background: #000;
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 1px solid #222;
+}
+
+.search-bar input {
+    width: 60%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+}
+
+/* ===================== */
+/* HERO */
+/* ===================== */
+.hero {
+    padding: 80px 0;
+    text-align: center;
+}
+
+.hero h2 {
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background: #4db8ff;
+    color: black;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #80d4ff;
+}
+
+/* ===================== */
+/* LESSON CARDS */
+/* ===================== */
+.lessons-overview {
+    padding: 50px 0;
+}
+
+.lessons-overview h3 {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.lesson-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.lesson-card {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.lesson-card:hover {
+    transform: translateY(-6px);
+    background: #222;
+}
+
+/* ===================== */
+/* FORM */
+/* ===================== */
+.form-card {
+    background: #1a1a1a;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    background: #222;
+    color: white;
+}
+
+/* ===================== */
+/* FOOTER */
+/* ===================== */
+.main-footer {
+    background: #000;
+    padding: 25px 0;
+    text-align: center;
+    border-top: 1px solid #222;
+}
+
+/* ===================== */
+/* ANIMATION */
+/* ===================== */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.6s ease;
+}
+
+.fade-in.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
